@@ -53,7 +53,8 @@ Circuit:
 
 
 
-Ein Signal C wird innerhalb der Architektur deklariert (siehe Beispiel in Abbildung 2.8). Dieses Beispiel zeigt auch das Konzept der parallelen Signalzuweisung (Concurrent Signal Assignment) in VHDL.
+Ein Signal C wird innerhalb der Architektur deklariert (siehe Beispiel in Abbildung 2.8). 
+Dieses Beispiel zeigt auch das Konzept der parallelen Signalzuweisung (Concurrent Signal Assignment) in VHDL.
 Signalzuweisung in VHDL
 
     Signalzuweisungen verwenden den Operator <=.
@@ -103,3 +104,93 @@ C <= not A;
 Y <= B and C;
 
 end architecture;
+
+/*
+
+Variables
+---------
+
+Unterschied zu Signalen:
+Variablen sind keine physischen Drähte, sondern werden als Zwischenspeicher verwendet.
+
+    • Sie existieren nur innerhalb eines Prozesses.
+    • Änderungen an Variablen passieren sofort, ohne Verzögerung.
+    • Deklaration von Variablen:
+           Variablen werden im Deklarationsteil eines Prozesses 
+           (vor dem begin-Statement) definiert.
+
+variable <name> : <type> [:=initial_value];
+
+
+
+Constant
+--------
+
+Konstanten repräsentieren feste Werte, 
+die während des gesamten Designs unverändert bleiben.
+
+    • Sie werden oft für Werte genutzt, die mehrfach verwendet werden.
+    • Deklaration: Konstanten können in der 
+       -> Architektur, Entity oder in einem Paket definiert werden.
+
+constant <name> : <type> [:= initial_value];
+
+
+
+VHDL Datatype
+-------------
+
+Da VHDL eine stark typisierte Sprache ist, 
+können nur Werte des gleichen Typs zugewiesen werden.
+
+Häufig verwendete Datentypen:
+
+   • std_logic: einzelne Leitung oder ein Bit 
+                (z. B. 0 oder 1).
+
+   • std_logic_vector: Gruppiert mehrere std_logic-Signale 
+                       (z. B. für Datenbusse).
+
+Weitere Typen:
+
+    integer, boolean, unsigned, signed, enumerated, bit.
+
+
+
+std_logic vs. std_ulogic
+------------------------
+
+• std_logic:  ist ein erweiterter Typ von std_ulogic, 
+              der zusätzliche Werte wie Z (hohe Impedanz) oder 
+              U (nicht initialisiert) repräsentieren kann.
+
+• std_ulogic: - ist für Synthese geeignet 
+                und wird oft für physische Ports genutzt.
+              - std_ulogic ist ähnlich wie std_logic, 
+                hat aber keine automatische Fehlerbehebung bei Konflikten.
+              - Konflikte entstehen, 
+                wenn zwei Signale denselben Draht steuern wollen 
+                (z. B. ein Wert 0 und ein Wert 1 gleichzeitig).
+
+type std_ulogic is ( U', -- uninitialised,
+                     'X', -- forcing unknown
+                     '0', -- forcing 0
+                     '1', -- forcing 1
+                     'Z', -- high impedance
+                     'W', -- weak unknown
+                     'L', -- weak 0
+                     'H', -- weak 1
+                     '-'  -- unspecified (do not care)
+);
+
+
+e.g.:
+
+*/
+
+entity top_level is
+    port (
+        clk : in std_logic;                       -- Single line input line/ Eingangsleitung
+        data : out std_logic_vector(7 downto 0)   -- 8-bit wide output line/ Ausgangsbus
+    );                                            -- 8-Bit-Datenbus, also eine Gruppe von Signalen.
+end entity top_level;
