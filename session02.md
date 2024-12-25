@@ -59,5 +59,3 @@
   - **Recommendation:** Combine STA with behavioral simulation to ensure both timing and functionality are verified.
 
 ---
-
-Feel free to contribute to this repository with examples, scripts, or improvements to enhance understanding of FPGA design and simulation workflows!
