@@ -5,6 +5,8 @@ What is VHDL ? (my notes)
 - Die **Synthese** wandelt eine VHDL-Beschreibung in diese Hardware-Ressourcen um.  
 - **RTL** beschreibt den Datenfluss zwischen Registern und wird benötigt, um ein Design in Hardware umzusetzen.
 
+--- 
+
 ### **Was sind Concurrent Statements in VHDL?**
 - **Concurrent** bedeutet: **gleichzeitig**.  
   In VHDL werden alle Anweisungen, die zwischen `begin` und `end architecture` stehen, **parallel** ausgeführt.
