@@ -99,3 +99,5 @@ Kein Problem, ich erkläre es einfacher und klarer:
 - Dabei werden die Eingänge und Ausgänge deines Designs mit den **Signalen** der Testbench **verbunden**.
 
 ---
+
+all credits goes to Ketil Røed
