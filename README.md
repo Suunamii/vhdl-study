@@ -29,6 +29,13 @@ dut: entity work.half_adder(rtl)
 
 
 ---
+
+
+- **Prozess**: Alle Anweisungen im Prozess werden ausgeführt, wenn ein Signal in der Sensitivitätsliste sich ändert.
+- **Concurrent** Statements: Jede Anweisung arbeitet unabhängig.
+
+---
+
 ### **Was sind Concurrent Statements in VHDL?**
 - **Concurrent** bedeutet: **gleichzeitig**.  
   In VHDL werden alle Anweisungen, die zwischen `begin` und `end architecture` stehen, **parallel** ausgeführt.
