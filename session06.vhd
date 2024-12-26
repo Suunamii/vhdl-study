@@ -157,11 +157,212 @@ und end architecture verwendet werden.
         auf der rechten Seite der Zuweisung ändert.    
     
     
+Z <= A and B;
+Z <= C and D;  -- Mehrfachzuweisung an Z    
+    --> ERROR
     
-    
-    
-    
+
+Solution:
+
+Statt Mehrfachzuweisungen kannst du eine bedingte Zuweisung verwenden:
+
+
+Z <= (A and B) when ena = '1' else (C and D);
+
+--
+
+Die Syntax für when-else:
+
+result_signal <= expression_1 when condition_1 else
+                 expression_2 when condition_2 else
+                 expression_3 when condition_3 else
+                 :
+                 expression_n;
+
+
+
+Eine Alternative ist die with-select-Anweisung:
+
+with input_signal select
+  result_signal <= expression_1 when condition_1,
+                   expression_2 when condition_2,
+                   expression_3 when condition_3,
+                   :
+                   expression_n when others;
+
+    Unterschied zu when-else:
+        • with-select prüft nur einen Eingang (z. B. input_signal).
+        • when-else kann mehrere Eingänge und Bedingungen prüfen.
+        • with-select entspricht eher der Funktion eines Multiplexers.
+
+  
+
+Behavioral Modellierung
+-----------------------
+
+• Behaviorale Modellierung beschreibt, 
+  wie sich die Schaltung verhalten soll, ohne sich darum zu kümmern, 
+  wie sie tatsächlich in Hardware umgesetzt wird.
+
+• Sie arbeitet auf der höchsten Abstraktionsebene 
+  und ähnelt mehr einem Algorithmus als einer konkreten Hardware-Beschreibung.
+
+
+
+Wann wird sie verwendet?
+
+  1. Testbenches:
+      • Behaviorale Beschreibungen werden oft verwendet, 
+        um Testbenches zu schreiben, mit denen das Verhalten
+        einer Schaltung überprüft wird.
+
+  2. Hardware-Implementierung:
+      • Unter bestimmten Einschränkungen 
+        (z. B. Nutzung einer begrenzten Menge der VHDL-Syntax) 
+        kann auch Hardware mit behavioralem Stil beschrieben werden.
+      • Dabei wird auf kombinatorische Logik (Gatter) 
+        und Speicher (Register) reduziert 
+         -> siehe Register Transfer Level (RTL).
+
+  example:
+
+Ein Multiplexer wählt basierend auf einem Steuersignal (SEL), 
+welcher Eingang (A oder B) an den Ausgang (Y) weitergegeben wird.
+
+Wenn SEL = 0 ist, wird A an Y weitergegeben.
+Wenn SEL = 1 ist, wird B an Y weitergegeben.
+-- eine logische Verknüpfung mit AND, OR und NOT.
+
 */
+
+-- 1. Data-Flow- Modellierung
+architecture description_model of mux is
+begin
+  Y <= ((not sel) and A) or (sel and B);
+end architecture;
+
+-- 2. Behavioral-Modellierung
+architecture desc_model of mux is
+begin
+  process(sel, A, B) is
+  begin
+    if sel = '0' then
+      Y <= A;
+    else
+      Y <= B;
+  end if;
+end process;
+
+/*
+
+
+Data-Flow-Modellierung:
+  • Logisch und direkt.
+  • Zeigt, wie die Signale miteinander verknüpft sind.
+  • Basiert auf logischen Operationen.
+
+
+A ___________
+             \ 
+              AND Y~0   ________
+            o                   \
+           /                     \
+          /                       \
+         /                         OR Y~2 ____ Y
+        |                        /
+B  _____|______                 /
+        |      \               /
+        |       AND Y~1  _____/
+        |    __/
+        |   /
+SEL ____•__/
+ 
+=> Quartus wont think of using a multiplexer gatter
+
+
+
+Behaviorale Modellierung:
+  • Beschreibt das Verhalten auf einer abstrakteren Ebene 
+    (z. B. mit Bedingungen oder Algorithmen).
+  • Ist flexibler, da sie komplexe Verhaltensweisen 
+    einfacher ausdrücken kann.
+
+SEL _______________
+                   |
+                \  |
+                |\ | Y
+                | \|
+                |  \
+                |   \
+             0  |    \
+B ______________|     |
+                |     |_____________ Y
+                |     |
+                |     |
+             1  |    /
+A ______________|   /
+                |  /
+                | /
+                |/
+                /
+
+=> Quartus has interpreted the behaviour as a multiplexer !
+
+
+
+
+
+Register Transfer Level (RTL)
+----------------------------
+
+
+
+Was ist ein FPGA?
+
+    Ein FPGA (Field-Programmable Gate Array) ist eine Matrix 
+    aus logischen Blöcken, die miteinander verbunden sind.
+
+    Jeder logische Block enthält zwei wichtige Bausteine:
+      • Look-Up Table (LUT):
+            Für kombinatorische Logik (z. B. AND-, OR-, NOT-Gatter).
+      • Register:
+            Zum Speichern von Daten (z. B. Zwischenergebnisse).
+
+      
+Wie funktioniert die Synthese von VHDL zu FPGA-Hardware?
+
+  • Die Synthese ist der Prozess, bei dem eine VHDL-Beschreibung 
+     in Hardware umgesetzt wird.
+  
+  • Der Synthese-Tool (Software) übersetzt die Funktionalität, 
+    die in VHDL beschrieben ist, in die verfügbaren FPGA-Ressourcen:
+        - LUTs für kombinatorische Logik.
+        - Register für die Speicherung der Ergebnisse
+
+
+Welche VHDL-Stile werden für RTL genutzt?
+
+RTL kann eine Mischung aus verschiedenen VHDL-Stilen sein:
+
+  • Strukturell: Verbindungen zwischen Bausteinen.
+  • Datenfluss (Data-flow): Logik und Signalverarbeitung.
+  • Begrenzte Verhaltensbeschreibung (Behavioral): 
+      Für Zustände und einfache Algorithmen.
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
