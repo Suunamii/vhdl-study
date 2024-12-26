@@ -7,6 +7,28 @@ What is VHDL ? (my notes)
 
 --- 
 
+- In der **Testbench** erzeugst man Signale, die die Eingänge und Ausgänge des Designs simulieren
+
+Dann verwendest du die direkte Instanziierung, um dein Design in die Testbench einzubinden:
+
+```vhdl
+dut: entity work.half_adder(rtl)
+  port map (
+    A => A,           -- Signal A aus der Testbench wird mit Eingang A des Designs verbunden
+    B => B,           -- Signal B aus der Testbench wird mit Eingang B des Designs verbunden
+    SUM => SUM,       -- Ausgang SUM des Designs wird mit Signal SUM der Testbench verbunden
+    COUT => COUT      -- Ausgang COUT des Designs wird mit Signal COUT der Testbench verbunden
+  );
+```
+
+### **Warum nennt man das „direkte Instanziierung“?**
+- Du sagst der Testbench direkt:
+  - Welches **Design** (`half_adder`) sie verwenden soll.
+  - Welche **Architektur** (`rtl`) des Designs benutzt werden soll.
+  - Wie die **Signale der Testbench** mit den **Ports des Designs** verbunden werden.
+
+
+---
 ### **Was sind Concurrent Statements in VHDL?**
 - **Concurrent** bedeutet: **gleichzeitig**.  
   In VHDL werden alle Anweisungen, die zwischen `begin` und `end architecture` stehen, **parallel** ausgeführt.
@@ -57,5 +79,16 @@ Z <= (A and B) when ena = '1' else (C and D);
 ### **Wichtig zu verstehen: Concurrent Statements ≠ Reihenfolge**
 - Concurrent Statements sind wie **verschiedene Drähte**, die **gleichzeitig** arbeiten.
 - In der Realität beschreibt jede Anweisung ein eigenes Stück Hardware, das unabhängig von anderen arbeitet.
+
+---
+-------
+Kein Problem, ich erkläre es einfacher und klarer:
+
+---
+
+### **Was bedeutet „Direkte Instanziierung“?**
+- **Instanziierung** bedeutet, dass du dein Design (z. B. den Half-Adder) in der Testbench **verwendest**.  
+- Bei der **direkten Instanziierung** sagst du der Testbench, dass sie ein bestimmtes Design benutzen soll, das du schon vorher erstellt hast.  
+- Dabei werden die Eingänge und Ausgänge deines Designs mit den **Signalen** der Testbench **verbunden**.
 
 ---
