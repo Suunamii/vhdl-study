@@ -97,3 +97,58 @@ begin
         wait;                                -- stop the simulation
     end process;
 end architecture half_adder_tb;
+
+
+/*
+
+Simulate in Modelsim
+--------------------
+
+A simulation tool like Modelsim can be used to run the test bench 
+and visualize its behaviour in a wave diagram format
+
+The files have to be compiled in the correct order. 
+half_adder_tb.vhd is dependent on half_adder.vhd, 
+half_adder.vhd therefore has to be compiled first. 
+To compile right click on the file and choose (Compile -> Compile Selected).
+
+
+Asser and Report
+----------------
+
+• assert: Prüft, ob eine Bedingung wahr oder falsch ist.
+
+    - Wenn die Bedingung wahr ist, passiert nichts.
+    - Wenn die Bedingung falsch ist, wird ein Fehler gemeldet.
+
+• report: Gibt eine Nachricht aus, 
+          um Informationen / Warnungen während der Simulation anzuzeigen. 
+          Kann optional mit einer Schweregradstufe (severity) versehen werden:
+
+    - note: Hinweis (Standard, wenn keine Stufe angegeben wird).
+    - warning: Warnung.
+    - error: Fehler.
+    - failure: Kritischer Fehler, der die Simulation stoppt.
+
+
+
+Clock Soure
+------------
+
+Für synchronisierte Designs wird ein Taktsignal benötigt:
+
+    Das Taktsignal wechselt zwischen 0 und 1.
+
+*/
+
+process
+begin
+    clk <= '0';
+    wait for 10 ns;
+    clk <= '1';
+    wait for 10 ns;
+end process;
+
+-- infinity loop 
+--  -> kann für die Testbench verwendet werden, 
+--    um z.B. Register oder Speicher zu synchronisieren.
