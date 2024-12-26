@@ -1,6 +1,10 @@
 What is VHDL ? (my notes)
 ---
 
+- Ein FPGA besteht aus **LUTs** und **Registern**, die für kombinatorische und sequenzielle Logik verwendet werden.  
+- Die **Synthese** wandelt eine VHDL-Beschreibung in diese Hardware-Ressourcen um.  
+- **RTL** beschreibt den Datenfluss zwischen Registern und wird benötigt, um ein Design in Hardware umzusetzen.
+
 ### **Was sind Concurrent Statements in VHDL?**
 - **Concurrent** bedeutet: **gleichzeitig**.  
   In VHDL werden alle Anweisungen, die zwischen `begin` und `end architecture` stehen, **parallel** ausgeführt.
@@ -53,4 +57,3 @@ Z <= (A and B) when ena = '1' else (C and D);
 - In der Realität beschreibt jede Anweisung ein eigenes Stück Hardware, das unabhängig von anderen arbeitet.
 
 ---
-
